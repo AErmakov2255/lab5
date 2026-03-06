@@ -15,8 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Debug files
         run: |
