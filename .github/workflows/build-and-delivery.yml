@@ -18,15 +18,24 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
+      - name: Debug files
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 2 -type f | sort
+          echo "---- Dockerfile ----"
+          cat Dockerfile
+          echo "---- requirements.txt ----"
+          cat requirements.txt
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/my-app:latest
+      - name: Build image
+        run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/my-app:latest .
+
+      - name: Push image
+        run: docker push ${{ vars.DOCKERHUB_USERNAME }}/my-app:latest
