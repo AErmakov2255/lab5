@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install fastapi httpx pytest uvicorn sqlalchemy psycopg2-binary
+          pip install fastapi httpx pytest uvicorn sqlalchemy psycopg2-binary pydantic-settings
 
       - name: Run tests
         run: python -m pytest tests/
